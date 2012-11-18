@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	Title		: sample project for Generic Excel File(XLSX) Reader program 
+	Copyright	: (c) www.myjeeva.com
+	@filename	: pom.xml 
+	@author		: <a href="jeeva@myjeeva.com">Jeevanandam Madanagopal</a>
+	@date		: Nov 08, 2012 11:15:34 PM GMT+05:30
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+	<groupId>com.myjeeva.poi</groupId>
+	<artifactId>excelReader</artifactId>
+	<packaging>jar</packaging>
+	<name>Generic Excel File(XLSX) Reader</name>
+	<version>1.0</version>
+	<description>Project of Generic Excel File Reader with Sample</description>
+	<url>http://www.myjeeva.com</url>
+	<licenses>
+		<license>
+			<name>The MIT License (MIT)</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+        <developer>
+                <id>jeevatkm</id>
+                <name>Jeevanandam Madanagopal</name>
+                <email>jeeva@myjeeva.com</email>
+        </developer>
+    </developers>
+    
+    <properties>
+		<javadoc.output.basepath>${basedir}/javadoc/docs</javadoc.output.basepath>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<!-- Dependencies -->
+    <dependencies>
+    	<dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.8</version> 
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.8</version>
+        </dependency>
+		<dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+     </dependencies>
+     <build>
+          <defaultGoal>install</defaultGoal>
+
+          <pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+						<fork>false</fork>
+						<compilerArguments>
+							<Xmaxerrs>1000</Xmaxerrs>
+						</compilerArguments>
+					</configuration>
+				</plugin>
+          		<plugin>
+				   <groupId>org.apache.maven.plugins</groupId>
+				   <artifactId>maven-javadoc-plugin</artifactId>
+				   <version>2.9</version>
+				   <configuration>
+					   	<doctitle>${project.name}(${project.version})</doctitle>
+					   	<validateLinks>true</validateLinks>
+					   	<detectLinks>true</detectLinks>
+					   	<charset>UTF-8</charset>
+					   	<header>${project.name}</header>
+					   	<bottom><![CDATA[<div class="license-info">Copyright &#169; 2012 <a href="http://www.myjeeva.com" target="_blank">www.myjeeva.com</a>, All rights reserved. <br/><br/><span>The copyright of the pages and contents on this website is with myjeeva.com and the content is licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank">Creative Commons Attribution-Share Alike 3.0 Unported License</a>. Libraries and code snippets on myjeeva.com has license information.</span></div>]]> </bottom>
+				    	<footer>${project.name}</footer>
+				    	<stylesheetfile>${basedir}/javadoc/stylesheets/stylesheet.css</stylesheetfile>
+				    	<docfilessubdirs>true</docfilessubdirs>
+				    	<verbose>true</verbose>
+				    	<reportOutputDirectory>${javadoc.output.basepath}</reportOutputDirectory>
+				    	<destDir>${project.version}</destDir>
+					</configuration>
+				</plugin>
+			</plugins>
+         </pluginManagement>
+      </build>	
+</project>
