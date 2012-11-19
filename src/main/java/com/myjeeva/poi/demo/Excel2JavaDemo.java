@@ -58,15 +58,11 @@ public class Excel2JavaDemo {
 	public static void main(String[] args) throws FileNotFoundException {
 		String SAMPLE_PERSON_DATA_FILE_PATH = "src/main/resources/Sample-Person-Data.xlsx";
 
-		/*
-		 * Input File initialize
-		 */
+		// Input File initialize
 		File file = new File(SAMPLE_PERSON_DATA_FILE_PATH);
 		InputStream inputStream = new FileInputStream(file);
 
-		/*
-		 * Excel Cell Mapping
-		 */
+		// Excel Cell Mapping
 		Map<String, String> cellMapping = new HashMap<String, String>();
 		cellMapping.put("HEADER", "Person Id,Name,Height,Email Address,DOB,Salary");
 		cellMapping.put("A", "personId");
@@ -89,15 +85,13 @@ public class Excel2JavaDemo {
 
 			if (workSheetHandler.getValueList().isEmpty()) {
 				// No data present
-				LOG.error("sHandler.getValueList() is empty; it means something went wrong parsing excel file");
+				LOG.error("sHandler.getValueList() is empty");
 			} else {
 
 				LOG.info(workSheetHandler.getValueList().size()
 						+ " no. of records read from given excel worksheet successfully.");
 
-				/*
-				 * Displaying data ead from Excel file
-				 */
+				// Displaying data ead from Excel file
 				displayPersonList(workSheetHandler.getValueList());
 			}
 
