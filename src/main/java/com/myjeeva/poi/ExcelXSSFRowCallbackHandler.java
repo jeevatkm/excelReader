@@ -38,16 +38,16 @@ import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler.SheetContentsHandl
 import org.apache.poi.xssf.model.StylesTable;
 
 /**
- * Excel Worksheet Handler for XML SAX parsing (.xlsx document model)
- * http://poi.apache.org/spreadsheet/how-to.html#xssf_sax_api
+ * <p>Excel Worksheet Handler for XML SAX parsing (.xlsx document model)
+ * <a href="http://poi.apache.org/spreadsheet/how-to.html#xssf_sax_api">http://poi.apache.org/spreadsheet/how-to.html#xssf_sax_api</a></p>
  *
- * Inspired by Jeevanandam Madanagopal
- * https://github.com/jeevatkm/generic-repo/tree/master/excelReader
+ * <p>Inspired by Jeevanandam Madanagopal
+ * <a href="https://github.com/jeevatkm/generic-repo/tree/master/excelReader">https://github.com/jeevatkm/generic-repo/tree/master/excelReader</a></p>
  *
- * Usage: Provide a {@link ExcelRowContentCallback} callback that will be provided a map
+ * <p><strong>Usage:</strong> Provide a {@link ExcelRowContentCallback} callback that will be provided a map
  * representing a row of data from the file. The keys will be the column headers and values the row data.
  * Your callback class encapsulates any business logic for processing the string data into dates, numbers, etc
- * to allow full customization of the parsing and processing logic.
+ * to allow full customization of the parsing and processing logic.</p>
  *
  * @author https://github.com/DouglasCAyers
  */

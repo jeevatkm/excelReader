@@ -13,7 +13,7 @@
 	<artifactId>excelReader</artifactId>
 	<packaging>jar</packaging>
 	<name>Generic Excel File(XLSX) Reader</name>
-	<version>1.0</version>
+	<version>1.1</version>
 	<description>Project of Generic Excel File Reader with Sample</description>
 	<url>http://www.myjeeva.com</url>
 	<licenses>
@@ -91,7 +91,7 @@
 					   	<detectLinks>true</detectLinks>
 					   	<charset>UTF-8</charset>
 					   	<header>${project.name}</header>
-					   	<bottom><![CDATA[<div class="license-info">Copyright &#169; 2012 <a href="http://www.myjeeva.com" target="_blank">www.myjeeva.com</a>, All rights reserved. <br/><br/><span>The copyright of the pages and contents on this website is with myjeeva.com and the content is licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank">Creative Commons Attribution-Share Alike 3.0 Unported License</a>. Libraries and code snippets on myjeeva.com has license information.</span></div>]]> </bottom>
+					   	<bottom><![CDATA[<div class="license-info">Copyright &#169; <a href="http://myjeeva.com" target="_blank">myjeeva.com</a>, All rights reserved. <br/><br/><span>The copyright of the pages and contents on this website is with myjeeva.com and the content is licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank">Creative Commons Attribution-Share Alike 3.0 Unported License</a>. Libraries and code snippets on myjeeva.com has license information.</span></div>]]> </bottom>
 				    	<footer>${project.name}</footer>
 				    	<stylesheetfile>${basedir}/javadoc/stylesheets/stylesheet.css</stylesheetfile>
 				    	<docfilessubdirs>true</docfilessubdirs>
