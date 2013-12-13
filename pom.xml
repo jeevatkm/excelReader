@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-	Title		: sample project for Generic Excel File(XLSX) Reader program 
-	Copyright	: (c) www.myjeeva.com
+	Title		: Generic Excel File(XLSX) Reader Library 
+	Copyright	: (c) myjeeva.com
 	@filename	: pom.xml 
-	@author		: <a href="jeeva@myjeeva.com">Jeevanandam Madanagopal</a>
+	@author		: <a href="jeeva@myjeeva.com">Jeevanandam M.</a>
 	@date		: Nov 08, 2012 11:15:34 PM GMT+05:30
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
     
 	<groupId>com.myjeeva.poi</groupId>
 	<artifactId>excelReader</artifactId>
@@ -15,7 +20,7 @@
 	<name>Generic Excel File(XLSX) Reader</name>
 	<version>1.2</version>
 	<description>Project of Generic Excel File Reader with Sample</description>
-	<url>http://www.myjeeva.com</url>
+	<url>http://myjeeva.com</url>
 	<licenses>
 		<license>
 			<name>The MIT License (MIT)</name>
@@ -26,8 +31,9 @@
 	<developers>
         <developer>
                 <id>jeevatkm</id>
-                <name>Jeevanandam Madanagopal</name>
+                <name>Jeevanandam M.</name>
                 <email>jeeva@myjeeva.com</email>
+                <url>http://myjeeva.com</url>
         </developer>
     </developers>
     
