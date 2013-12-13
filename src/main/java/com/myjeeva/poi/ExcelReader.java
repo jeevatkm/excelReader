@@ -27,8 +27,10 @@ package com.myjeeva.poi;
 /**
  * Generic Excel File(XLSX) Reading using Apache POI 
  * 
- * @author <a href="mailto:jeeva@myjeeva.com">Jeevanandam Madanagopal</a> 
+ * @author <a href="mailto:jeeva@myjeeva.com">Jeevanandam M.</a> 
  */
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -60,45 +62,70 @@ public class ExcelReader {
 
 	private OPCPackage xlsxPackage;
 	private SheetContentsHandler sheetContentsHandler;
+	private ExcelSheetCallback sheetCallback;
 
-	/**
-	 * Constructor: Microsoft Excel File Reader (XLSX)
-	 * 
-	 * @param pkg
-	 *            a {@link OPCPackage} object - The package to process XLSX
-	 * @param sheetContentsHandler
-	 *            a {@link SheetContentsHandler} object - WorkSheet contents
-	 *            handler
-	 */
-	public ExcelReader(OPCPackage pkg, SheetContentsHandler sheetContentsHandler) {
+	// Constructors
+	public ExcelReader(OPCPackage pkg,
+			SheetContentsHandler sheetContentsHandler,
+			ExcelSheetCallback sheetCallback) {
 		this.xlsxPackage = pkg;
 		this.sheetContentsHandler = sheetContentsHandler;
+		this.sheetCallback = sheetCallback;
+	}
+
+	public ExcelReader(String filePath,
+			SheetContentsHandler sheetContentsHandler,
+			ExcelSheetCallback sheetCallback) throws Exception {
+		this(getOPCPackage(getFile(filePath)), sheetContentsHandler,
+				sheetCallback);
+	}
+
+	public ExcelReader(File file, SheetContentsHandler sheetContentsHandler,
+			ExcelSheetCallback sheetCallback) throws Exception {
+		this(getOPCPackage(file), sheetContentsHandler, sheetCallback);
 	}
 
 	/**
 	 * Processing all the WorkSheet from XLSX Workbook.
 	 * 
-	 *  <br><br><strong>For Example:</strong><br>
-	 *  <code>ExcelReader excelReader = new ExcelReader(pkg, workSheetHandler);
-	 *  excelReader.process();</code>
-	 * @throws RuntimeException
+	 * <br>
+	 * <br>
+	 * <strong>Example 1:</strong><br>
+	 * <code>ExcelReader excelReader = new ExcelReader("src/main/resources/Sample-Person-Data.xlsx", workSheetHandler, sheetCallback);
+	 * <br>excelReader.process();</code>
+	 * <br><br><strong>Example 2:</strong><br>
+	 * <code>ExcelReader excelReader = new ExcelReader(file, workSheetHandler, sheetCallback);
+	 * <br>excelReader.process();</code>
+	 * <br><br><strong>Example 3:</strong><br>
+	 * <code>ExcelReader excelReader = new ExcelReader(pkg, workSheetHandler, sheetCallback);
+	 * <br>excelReader.process();</code>
+	 * 
+	 * @throws Exception
 	 */
-	public void process() throws RuntimeException {
+	public void process() throws Exception {
 		read(READ_ALL);
 	}
 
 	/**
 	 * Processing of particular WorkSheet (zero based) from XLSX Workbook.
 	 * 
-	 * <br><br><strong>For Example:</strong><br>
-	 * <code>ExcelReader excelReader = new ExcelReader(pkg, workSheetHandler);
-	 * excelReader.process(2);</code>
+	 * <br>
+	 * <br>
+	 * <strong>Example 1:</strong><br>
+	 * <code>ExcelReader excelReader = new ExcelReader("src/main/resources/Sample-Person-Data.xlsx", workSheetHandler, sheetCallback);
+	 * <br>excelReader.process(2);</code>
+	 * <br><br><strong>Example 2:</strong><br>
+	 * <code>ExcelReader excelReader = new ExcelReader(file, workSheetHandler, sheetCallback);
+	 * <br>excelReader.process(2);</code>
+	 * <br><br><strong>Example 3:</strong><br>
+	 * <code>ExcelReader excelReader = new ExcelReader(pkg, workSheetHandler, sheetCallback);
+	 * <br>excelReader.process(2);</code>
 	 * 
 	 * @param sheetNumber
 	 *            a int object
-	 * @throws RuntimeException
+	 * @throws Exception
 	 */
-	public void process(int sheetNumber) throws RuntimeException {
+	public void process(int sheetNumber) throws Exception {
 		read(sheetNumber);
 	}
 
@@ -110,11 +137,17 @@ public class ExcelReader {
 			StylesTable styles = xssfReader.getStylesTable();
 			Iterator<InputStream> sheets = xssfReader.getSheetsData();
 			for (int sheet = 0; sheets.hasNext(); sheet++) {
+				if (null != sheetCallback)
+					this.sheetCallback.startSheet(sheet);
+
 				InputStream stream = sheets.next();
 				if ((READ_ALL == sheetNumber) || (sheet == sheetNumber)) {
 					readSheet(styles, strings, stream);
 				}
 				IOUtils.closeQuietly(stream);
+
+				if (null != sheetCallback)
+					this.sheetCallback.endSheet();
 			}
 		} catch (IOException ioe) {
 			LOG.error(ioe.getMessage(), ioe.getCause());
@@ -145,16 +178,28 @@ public class ExcelReader {
 			ReadOnlySharedStringsTable sharedStringsTable,
 			InputStream sheetInputStream) throws IOException,
 			ParserConfigurationException, SAXException {
-		InputSource sheetSource = new InputSource(sheetInputStream);		
+		InputSource sheetSource = new InputSource(sheetInputStream);
 		SAXParserFactory saxFactory = SAXParserFactory.newInstance();
-		
+
 		SAXParser saxParser = saxFactory.newSAXParser();
 		XMLReader sheetParser = saxParser.getXMLReader();
-		
+
 		ContentHandler handler = new XSSFSheetXMLHandler(styles,
 				sharedStringsTable, sheetContentsHandler, true);
 		sheetParser.setContentHandler(handler);
-		
+
 		sheetParser.parse(sheetSource);
+	}
+
+	private static File getFile(String filePath) throws Exception {
+		if (null == filePath || filePath.isEmpty()) {
+			throw new Exception("File path cannot be null");
+		}
+
+		return new File(filePath);
+	}
+
+	private static OPCPackage getOPCPackage(File file) throws Exception {
+		return OPCPackage.open(new FileInputStream(file));
 	}
 }

@@ -26,7 +26,6 @@ package com.myjeeva.poi.demo;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -40,22 +39,23 @@ import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.util.IOUtils;
 
 import com.myjeeva.poi.ExcelReader;
+import com.myjeeva.poi.ExcelSheetCallback;
 import com.myjeeva.poi.ExcelWorkSheetHandler;
 import com.myjeeva.poi.demo.vo.PersonVO;
 
 /**
  * Demonstration of Generic Excel File (XLSX) Reading using Apache POI
  * 
- * @author <a href="mailto:jeeva@myjeeva.com">Jeevanandam Madanagopal</a>
+ * @author <a href="mailto:jeeva@myjeeva.com">Jeevanandam M.</a>
  */
 public class Excel2JavaDemo {
 	private static final Log LOG = LogFactory.getLog(Excel2JavaDemo.class);
 
 	/**
 	 * @param args
-	 * @throws FileNotFoundException
+	 * @throws Exception 
 	 */
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws Exception {
 		String SAMPLE_PERSON_DATA_FILE_PATH = "src/main/resources/Sample-Person-Data.xlsx";
 
 		// Input File initialize
@@ -64,7 +64,8 @@ public class Excel2JavaDemo {
 
 		// Excel Cell Mapping
 		Map<String, String> cellMapping = new HashMap<String, String>();
-		cellMapping.put("HEADER", "Person Id,Name,Height,Email Address,DOB,Salary");
+		cellMapping.put("HEADER",
+				"Person Id,Name,Height,Email Address,DOB,Salary");
 		cellMapping.put("A", "personId");
 		cellMapping.put("B", "name");
 		cellMapping.put("C", "height");
@@ -75,12 +76,32 @@ public class Excel2JavaDemo {
 		// The package open is instantaneous, as it should be.
 		OPCPackage pkg = null;
 		try {
-			
+
 			ExcelWorkSheetHandler<PersonVO> workSheetHandler = new ExcelWorkSheetHandler<PersonVO>(
 					PersonVO.class, cellMapping);
-			
+
 			pkg = OPCPackage.open(inputStream);
-			ExcelReader excelReader = new ExcelReader(pkg, workSheetHandler);
+			ExcelReader excelReader = new ExcelReader(pkg, workSheetHandler,
+					new ExcelSheetCallback() {
+						private int sheetNumber = 0;
+						@Override
+						public void startSheet(int sheetNum) {
+							this.sheetNumber = sheetNum;
+
+							System.out
+									.println("Started processing sheet number="
+											+ sheetNumber);
+
+						}
+
+						@Override
+						public void endSheet() {
+							System.out
+									.println("Processing completed for sheet number="
+											+ sheetNumber);
+						}
+					});
+
 			excelReader.process();
 
 			if (workSheetHandler.getValueList().isEmpty()) {

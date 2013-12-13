@@ -39,7 +39,7 @@ import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler.SheetContentsHandl
 /**
  * Generic Excel WorkSheet handler
  * 
- * @author <a href="mailto:jeeva@myjeeva.com">Jeevanandam Madanagopal</a>
+ * @author <a href="mailto:jeeva@myjeeva.com">Jeevanandam M.</a>
  */
 public class ExcelWorkSheetHandler<T> implements SheetContentsHandler {
 

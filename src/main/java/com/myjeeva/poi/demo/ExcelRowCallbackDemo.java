@@ -18,66 +18,113 @@ package com.myjeeva.poi.demo;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.util.IOUtils;
 
-import com.myjeeva.poi.ExcelXSSFRowCallbackHandler;
-import com.myjeeva.poi.ExcelXSSFRowCallbackHandler.ExcelRowContentCallback;
+import com.myjeeva.poi.ExcelReader;
+import com.myjeeva.poi.ExcelRowContentCallback;
+import com.myjeeva.poi.ExcelSheetCallback;
+import com.myjeeva.poi.ExcelWorkSheetRowCallbackHandler;
 
 /**
- * <p>Excel Worksheet Handler for XML SAX parsing (.xlsx document model)
- * <a href="http://poi.apache.org/spreadsheet/how-to.html#xssf_sax_api">http://poi.apache.org/spreadsheet/how-to.html#xssf_sax_api</a></p>
- *
- * <p>Inspired by Jeevanandam Madanagopal
- * <a href="https://github.com/jeevatkm/generic-repo/tree/master/excelReader">https://github.com/jeevatkm/generic-repo/tree/master/excelReader</a></p>
- *
- * <p><strong>Usage:</strong> Provide a {@link ExcelRowContentCallback} callback that will be provided a map
- * representing a row of data from the file. The keys will be the column headers and values the row data.
- * Your callback class encapsulates any business logic for processing the string data into dates, numbers, etc
- * to allow full customization of the parsing and processing logic.</p>
- *
+ * <p>
+ * Excel Worksheet Handler for XML SAX parsing (.xlsx document model) <a
+ * href="http://poi.apache.org/spreadsheet/how-to.html#xssf_sax_api"
+ * >http://poi.apache.org/spreadsheet/how-to.html#xssf_sax_api</a>
+ * </p>
+ * 
+ * <p>
+ * Inspired by Jeevanandam Madanagopal <a
+ * href="https://github.com/jeevatkm/generic-repo/tree/master/excelReader"
+ * >https://github.com/jeevatkm/generic-repo/tree/master/excelReader</a>
+ * </p>
+ * 
+ * <p>
+ * <strong>Usage:</strong> Provide a {@link ExcelRowContentCallback} callback
+ * that will be provided a map representing a row of data from the file. The
+ * keys will be the column headers and values the row data. Your callback class
+ * encapsulates any business logic for processing the string data into dates,
+ * numbers, etc to allow full customization of the parsing and processing logic.
+ * </p>
+ * 
  * @author https://github.com/DouglasCAyers
  */
 public class ExcelRowCallbackDemo {
+	private static final Log LOG = LogFactory
+			.getLog(ExcelRowCallbackDemo.class);
 
-	public static void main( String[] args ) throws Exception {
+	public static void main(String[] args) throws Exception {
 
 		String SAMPLE_PERSON_DATA_FILE_PATH = "src/main/resources/Sample-Person-Data.xlsx";
 
-		File file = new File( SAMPLE_PERSON_DATA_FILE_PATH );
-		InputStream fileInputStream = new FileInputStream( file );
+		File file = new File(SAMPLE_PERSON_DATA_FILE_PATH);
+		InputStream inputStream = new FileInputStream(file);
 
+		// The package open is instantaneous, as it should be.
+		OPCPackage pkg = null;
 		try {
+			ExcelWorkSheetRowCallbackHandler sheetRowCallbackHandler = new ExcelWorkSheetRowCallbackHandler(
+					new ExcelRowContentCallback() {
 
-			// Can create handler passing in various arguments for the excel source:
-			//	1) String (file path)
-			//	2) File
-			//	3) InputStream
-			//	4) OPCPackage
-			ExcelXSSFRowCallbackHandler handler = new ExcelXSSFRowCallbackHandler( SAMPLE_PERSON_DATA_FILE_PATH, new ExcelRowContentCallback() {
+						@Override
+						public void processRow(int rowNum,
+								Map<String, String> map) {
 
-				@Override
-				public void process( Map<String, String> map, int rowNum ) {
+							// Do any custom row processing here, such as save
+							// to database
+							// Convert map values, as necessary, to dates or
+							// parse as currency, etc
+							System.out.println("rowNum=" + rowNum + ", map="
+									+ map);
 
-					// Do any custom row processing here, such as save to database
-					// Convert map values, as necessary, to dates or parse as currency, etc
-					System.out.println( "rowNum=" + rowNum + ", map=" + map );
+						}
 
-				}
+					});
 
-			});
+			pkg = OPCPackage.open(inputStream);
+			ExcelReader excelReader = new ExcelReader(pkg,
+					sheetRowCallbackHandler, new ExcelSheetCallback() {
+						private int sheetNumber = 0;
+						@Override
+						public void startSheet(int sheetNum) {
+							this.sheetNumber = sheetNum;
 
-			// This method returns nothing, as all processing will occur in your callback defined above
-			handler.parse();
+							System.out
+									.println("Started processing sheet number="
+											+ sheetNumber);
+						}
 
+						@Override
+						public void endSheet() {
+							System.out
+									.println("Processing completed for sheet number="
+											+ sheetNumber);
+						}
+					});
+			excelReader.process();
+
+		} catch (RuntimeException are) {
+			LOG.error(are.getMessage(), are.getCause());
+		} catch (InvalidFormatException ife) {
+			LOG.error(ife.getMessage(), ife.getCause());
+		} catch (IOException ioe) {
+			LOG.error(ioe.getMessage(), ioe.getCause());
 		} finally {
-
-			IOUtils.closeQuietly( fileInputStream );
-
+			IOUtils.closeQuietly(inputStream);
+			try {
+				if (null != pkg) {
+					pkg.close();
+				}
+			} catch (IOException e) {
+				// just ignore IO exception
+			}
 		}
-
 	}
-
 }
