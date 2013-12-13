@@ -28,6 +28,11 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+	<scm>
+        	<connection>scm:git:git@github.com:jeevatkm/digitalocean-api-java.git</connection>
+        	<developerConnection>scm:git:git@github.com:jeevatkm/digitalocean-api-java.git</developerConnection>
+        	<url>git@github.com:jeevatkm/digitalocean-api-java.git</url>
+        </scm>
 	<developers>
         <developer>
                 <id>jeevatkm</id>
@@ -54,15 +59,15 @@
             <artifactId>poi-ooxml</artifactId>
             <version>3.9</version>
         </dependency>
-		<dependency>
+	<dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.1.1</version>
         </dependency>
         <dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.4</version>
+		<groupId>commons-lang</groupId>
+		<artifactId>commons-lang</artifactId>
+		<version>2.4</version>
         </dependency>
         <dependency>
             <groupId>commons-beanutils</groupId>
@@ -97,7 +102,7 @@
 					   	<detectLinks>true</detectLinks>
 					   	<charset>UTF-8</charset>
 					   	<header>${project.name}</header>
-					   	<bottom><![CDATA[<div class="license-info">Copyright &#169; <a href="http://myjeeva.com" target="_blank">myjeeva.com</a>, All rights reserved. <br/><br/><span>The copyright of the pages and contents on this website is with myjeeva.com and the content is licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank">Creative Commons Attribution-Share Alike 3.0 Unported License</a>. Libraries and code snippets on myjeeva.com has license information.</span></div>]]> </bottom>
+					   	<bottom><![CDATA[<div class="license-info">Copyright &#169; <a href="http://myjeeva.com" target="_blank">myjeeva.com</a>, All rights reserved. <br /><br /><span>The copyright of the pages and contents on this website is with myjeeva.com and the content is licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank">Creative Commons Attribution-Share Alike 3.0 Unported License</a>. Libraries and code snippets on myjeeva.com has license information.</span></div>]]> </bottom>
 				    	<footer>${project.name}</footer>
 				    	<stylesheetfile>${basedir}/javadoc/stylesheets/stylesheet.css</stylesheetfile>
 				    	<docfilessubdirs>true</docfilessubdirs>
@@ -109,4 +114,10 @@
 			</plugins>
          </pluginManagement>
       </build>	
+
+  <scm>
+    <connection>scm:svn:http://svn.sonatype.org/spice/tags/excelReader-1.2</connection>
+    <developerConnection>scm:svn:https://svn.sonatype.org/spice/tags/excelReader-1.2</developerConnection>
+    <url>http://svn.sonatype.org/spice/tags/excelReader-1.2</url>
+  </scm>
 </project>
