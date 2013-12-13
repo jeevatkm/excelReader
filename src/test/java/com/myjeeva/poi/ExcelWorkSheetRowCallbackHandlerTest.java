@@ -24,7 +24,7 @@
  * 
  */
 
-package com.myjeeva.poi.demo;
+package com.myjeeva.poi;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -66,9 +66,9 @@ import com.myjeeva.poi.ExcelWorkSheetRowCallbackHandler;
  * 
  * @author https://github.com/DouglasCAyers
  */
-public class ExcelRowCallbackDemo {
+public class ExcelWorkSheetRowCallbackHandlerTest {
 	private static final Log LOG = LogFactory
-			.getLog(ExcelRowCallbackDemo.class);
+			.getLog(ExcelWorkSheetRowCallbackHandlerTest.class);
 
 	public static void main(String[] args) throws Exception {
 

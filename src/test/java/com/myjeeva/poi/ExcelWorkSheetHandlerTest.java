@@ -22,7 +22,7 @@
  * THE SOFTWARE. 
  * 
  */
-package com.myjeeva.poi.demo;
+package com.myjeeva.poi;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,15 +41,15 @@ import org.apache.poi.util.IOUtils;
 import com.myjeeva.poi.ExcelReader;
 import com.myjeeva.poi.ExcelSheetCallback;
 import com.myjeeva.poi.ExcelWorkSheetHandler;
-import com.myjeeva.poi.demo.vo.PersonVO;
+import com.myjeeva.poi.vo.PersonVO;
 
 /**
  * Demonstration of Generic Excel File (XLSX) Reading using Apache POI
  * 
  * @author <a href="mailto:jeeva@myjeeva.com">Jeevanandam M.</a>
  */
-public class Excel2JavaDemo {
-	private static final Log LOG = LogFactory.getLog(Excel2JavaDemo.class);
+public class ExcelWorkSheetHandlerTest {
+	private static final Log LOG = LogFactory.getLog(ExcelWorkSheetHandlerTest.class);
 
 	/**
 	 * @param args

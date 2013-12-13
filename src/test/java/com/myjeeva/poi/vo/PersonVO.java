@@ -22,7 +22,7 @@
  * THE SOFTWARE. 
  * 
  */
-package com.myjeeva.poi.demo.vo;
+package com.myjeeva.poi.vo;
 
 import java.io.Serializable;
 
