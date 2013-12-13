@@ -38,7 +38,6 @@ import java.io.InputStream;
 import java.util.Iterator;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.logging.Log;
@@ -66,7 +65,18 @@ public class ExcelReader {
 	private SheetContentsHandler sheetContentsHandler;
 	private ExcelSheetCallback sheetCallback;
 
-	// Constructors
+	/**
+	 * Constructor: Microsoft Excel File (XSLX) Reader
+	 * 
+	 * @param pkg
+	 *            a {@link OPCPackage} object - The package to process XLSX
+	 * @param sheetContentsHandler
+	 *            a {@link SheetContentsHandler} object - WorkSheet contents
+	 *            handler
+	 * @param sheetCallback
+	 *            a {@link ExcelSheetCallback} object - WorkSheet callback for
+	 *            sheet processing begin and end (can be null)
+	 */
 	public ExcelReader(OPCPackage pkg,
 			SheetContentsHandler sheetContentsHandler,
 			ExcelSheetCallback sheetCallback) {
@@ -75,6 +85,18 @@ public class ExcelReader {
 		this.sheetCallback = sheetCallback;
 	}
 
+	/**
+	 * Constructor: Microsoft Excel File (XSLX) Reader
+	 * 
+	 * @param filePath
+	 *            a {@link String} object - The path of XLSX file
+	 * @param sheetContentsHandler
+	 *            a {@link SheetContentsHandler} object - WorkSheet contents
+	 *            handler
+	 * @param sheetCallback
+	 *            a {@link ExcelSheetCallback} object - WorkSheet callback for
+	 *            sheet processing begin and end (can be null)
+	 */
 	public ExcelReader(String filePath,
 			SheetContentsHandler sheetContentsHandler,
 			ExcelSheetCallback sheetCallback) throws Exception {
@@ -82,6 +104,18 @@ public class ExcelReader {
 				sheetCallback);
 	}
 
+	/**
+	 * Constructor: Microsoft Excel File (XSLX) Reader
+	 * 
+	 * @param file
+	 *            a {@link File} object - The File object of XLSX file
+	 * @param sheetContentsHandler
+	 *            a {@link SheetContentsHandler} object - WorkSheet contents
+	 *            handler
+	 * @param sheetCallback
+	 *            a {@link ExcelSheetCallback} object - WorkSheet callback for
+	 *            sheet processing begin and end (can be null)
+	 */
 	public ExcelReader(File file, SheetContentsHandler sheetContentsHandler,
 			ExcelSheetCallback sheetCallback) throws Exception {
 		this(getOPCPackage(file), sheetContentsHandler, sheetCallback);
@@ -94,11 +128,13 @@ public class ExcelReader {
 	 * <br>
 	 * <strong>Example 1:</strong><br>
 	 * <code>ExcelReader excelReader = new ExcelReader("src/main/resources/Sample-Person-Data.xlsx", workSheetHandler, sheetCallback);
-	 * <br>excelReader.process();</code>
-	 * <br><br><strong>Example 2:</strong><br>
+	 * <br>excelReader.process();</code> <br>
+	 * <br>
+	 * <strong>Example 2:</strong><br>
 	 * <code>ExcelReader excelReader = new ExcelReader(file, workSheetHandler, sheetCallback);
-	 * <br>excelReader.process();</code>
-	 * <br><br><strong>Example 3:</strong><br>
+	 * <br>excelReader.process();</code> <br>
+	 * <br>
+	 * <strong>Example 3:</strong><br>
 	 * <code>ExcelReader excelReader = new ExcelReader(pkg, workSheetHandler, sheetCallback);
 	 * <br>excelReader.process();</code>
 	 * 
@@ -115,11 +151,13 @@ public class ExcelReader {
 	 * <br>
 	 * <strong>Example 1:</strong><br>
 	 * <code>ExcelReader excelReader = new ExcelReader("src/main/resources/Sample-Person-Data.xlsx", workSheetHandler, sheetCallback);
-	 * <br>excelReader.process(2);</code>
-	 * <br><br><strong>Example 2:</strong><br>
+	 * <br>excelReader.process(2);</code> <br>
+	 * <br>
+	 * <strong>Example 2:</strong><br>
 	 * <code>ExcelReader excelReader = new ExcelReader(file, workSheetHandler, sheetCallback);
-	 * <br>excelReader.process(2);</code>
-	 * <br><br><strong>Example 3:</strong><br>
+	 * <br>excelReader.process(2);</code> <br>
+	 * <br>
+	 * <strong>Example 3:</strong><br>
 	 * <code>ExcelReader excelReader = new ExcelReader(pkg, workSheetHandler, sheetCallback);
 	 * <br>excelReader.process(2);</code>
 	 * 
@@ -180,17 +218,15 @@ public class ExcelReader {
 			ReadOnlySharedStringsTable sharedStringsTable,
 			InputStream sheetInputStream) throws IOException,
 			ParserConfigurationException, SAXException {
-		InputSource sheetSource = new InputSource(sheetInputStream);
-		SAXParserFactory saxFactory = SAXParserFactory.newInstance();
 
-		SAXParser saxParser = saxFactory.newSAXParser();
-		XMLReader sheetParser = saxParser.getXMLReader();
+		SAXParserFactory saxFactory = SAXParserFactory.newInstance();
+		XMLReader sheetParser = saxFactory.newSAXParser().getXMLReader();
 
 		ContentHandler handler = new XSSFSheetXMLHandler(styles,
 				sharedStringsTable, sheetContentsHandler, true);
-		sheetParser.setContentHandler(handler);
 
-		sheetParser.parse(sheetSource);
+		sheetParser.setContentHandler(handler);
+		sheetParser.parse(new InputSource(sheetInputStream));
 	}
 
 	private static File getFile(String filePath) throws Exception {
@@ -202,6 +238,11 @@ public class ExcelReader {
 	}
 
 	private static OPCPackage getOPCPackage(File file) throws Exception {
+		if (null == file || !file.canRead()) {
+			throw new Exception(
+					"File object is null or cannot have read permission");
+		}
+
 		return OPCPackage.open(new FileInputStream(file));
 	}
 }

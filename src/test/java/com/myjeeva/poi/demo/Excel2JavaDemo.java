@@ -56,7 +56,7 @@ public class Excel2JavaDemo {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		String SAMPLE_PERSON_DATA_FILE_PATH = "src/main/resources/Sample-Person-Data.xlsx";
+		String SAMPLE_PERSON_DATA_FILE_PATH = "src/test/resources/Sample-Person-Data.xlsx";
 
 		// Input File initialize
 		File file = new File(SAMPLE_PERSON_DATA_FILE_PATH);
@@ -80,29 +80,29 @@ public class Excel2JavaDemo {
 			ExcelWorkSheetHandler<PersonVO> workSheetHandler = new ExcelWorkSheetHandler<PersonVO>(
 					PersonVO.class, cellMapping);
 
-			pkg = OPCPackage.open(inputStream);
-			ExcelReader excelReader = new ExcelReader(pkg, workSheetHandler,
-					new ExcelSheetCallback() {
-						private int sheetNumber = 0;
-						@Override
-						public void startSheet(int sheetNum) {
-							this.sheetNumber = sheetNum;
+			pkg = OPCPackage.open(inputStream);			
+			
+			ExcelSheetCallback sheetCallback = new ExcelSheetCallback() {
+				private int sheetNumber = 0;
+				
+				@Override
+				public void startSheet(int sheetNum) {
+					this.sheetNumber = sheetNum;
+					System.out.println("Started processing sheet number="
+							+ sheetNumber);
+				}
 
-							System.out
-									.println("Started processing sheet number="
-											+ sheetNumber);
-
-						}
-
-						@Override
-						public void endSheet() {
-							System.out
-									.println("Processing completed for sheet number="
-											+ sheetNumber);
-						}
-					});
-
-			excelReader.process();
+				@Override
+				public void endSheet() {
+					System.out.println("Processing completed for sheet number="
+							+ sheetNumber);
+				}
+			};			
+			
+			System.out.println("Constructor: pkg, workSheetHandler, sheetCallback");
+			ExcelReader example1 = new ExcelReader(pkg,
+					workSheetHandler, sheetCallback);
+			example1.process();
 
 			if (workSheetHandler.getValueList().isEmpty()) {
 				// No data present
@@ -115,6 +115,16 @@ public class Excel2JavaDemo {
 				// Displaying data ead from Excel file
 				displayPersonList(workSheetHandler.getValueList());
 			}
+			
+			System.out.println("\nConstructor: filePath, workSheetHandler, sheetCallback");
+			ExcelReader example2 = new ExcelReader(SAMPLE_PERSON_DATA_FILE_PATH,
+					workSheetHandler, sheetCallback);
+			example2.process();
+			
+			System.out.println("\nConstructor: file, workSheetHandler, sheetCallback");
+			ExcelReader example3 = new ExcelReader(file,
+					workSheetHandler, null);
+			example3.process();
 
 		} catch (RuntimeException are) {
 			LOG.error(are.getMessage(), are.getCause());

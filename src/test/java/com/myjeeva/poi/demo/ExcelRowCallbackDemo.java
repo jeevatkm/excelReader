@@ -72,7 +72,7 @@ public class ExcelRowCallbackDemo {
 
 	public static void main(String[] args) throws Exception {
 
-		String SAMPLE_PERSON_DATA_FILE_PATH = "src/main/resources/Sample-Person-Data.xlsx";
+		String SAMPLE_PERSON_DATA_FILE_PATH = "src/test/resources/Sample-Person-Data.xlsx";
 
 		File file = new File(SAMPLE_PERSON_DATA_FILE_PATH);
 		InputStream inputStream = new FileInputStream(file);
@@ -99,26 +99,38 @@ public class ExcelRowCallbackDemo {
 					});
 
 			pkg = OPCPackage.open(inputStream);
-			ExcelReader excelReader = new ExcelReader(pkg,
-					sheetRowCallbackHandler, new ExcelSheetCallback() {
-						private int sheetNumber = 0;
-						@Override
-						public void startSheet(int sheetNum) {
-							this.sheetNumber = sheetNum;
 
-							System.out
-									.println("Started processing sheet number="
-											+ sheetNumber);
-						}
+			ExcelSheetCallback sheetCallback = new ExcelSheetCallback() {
+				private int sheetNumber = 0;
+				
+				@Override
+				public void startSheet(int sheetNum) {
+					this.sheetNumber = sheetNum;
+					System.out.println("Started processing sheet number="
+							+ sheetNumber);
+				}
 
-						@Override
-						public void endSheet() {
-							System.out
-									.println("Processing completed for sheet number="
-											+ sheetNumber);
-						}
-					});
-			excelReader.process();
+				@Override
+				public void endSheet() {
+					System.out.println("Processing completed for sheet number="
+							+ sheetNumber);
+				}
+			};			
+			
+			System.out.println("Constructor: pkg, sheetRowCallbackHandler, sheetCallback");
+			ExcelReader example1 = new ExcelReader(pkg,
+					sheetRowCallbackHandler, sheetCallback);
+			example1.process();
+			
+			System.out.println("\nConstructor: filePath, sheetRowCallbackHandler, sheetCallback");
+			ExcelReader example2 = new ExcelReader(SAMPLE_PERSON_DATA_FILE_PATH,
+					sheetRowCallbackHandler, sheetCallback);
+			example2.process();
+			
+			System.out.println("\nConstructor: file, sheetRowCallbackHandler, sheetCallback");
+			ExcelReader example3 = new ExcelReader(file,
+					sheetRowCallbackHandler, null);
+			example3.process();	
 
 		} catch (RuntimeException are) {
 			LOG.error(are.getMessage(), are.getCause());

@@ -17,7 +17,7 @@
 	<groupId>com.myjeeva.poi</groupId>
 	<artifactId>excelReader</artifactId>
 	<packaging>jar</packaging>
-	<name>Generic Excel File(XLSX) Reader</name>
+	<name>Generic Excel File (XLSX) Reader</name>
 	<version>1.2-SNAPSHOT</version>
 	<description>Project of Generic Excel File Reader with Sample</description>
 	<url>http://myjeeva.com</url>
