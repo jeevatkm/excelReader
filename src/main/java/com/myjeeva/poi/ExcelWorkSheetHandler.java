@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (c) 2012 www.myjeeva.com
+ * Copyright (c) myjeeva.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,8 @@ import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler.SheetContentsHandl
  * Generic Excel WorkSheet handler
  * 
  * @author <a href="mailto:jeeva@myjeeva.com">Jeevanandam M.</a>
+ * 
+ * @since v1.0
  */
 public class ExcelWorkSheetHandler<T> implements SheetContentsHandler {
 
