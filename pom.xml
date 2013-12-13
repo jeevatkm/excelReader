@@ -29,10 +29,10 @@
 		</license>
 	</licenses>
 	<scm>
-        	<connection>scm:git:git@github.com:jeevatkm/digitalocean-api-java.git</connection>
-        	<developerConnection>scm:git:git@github.com:jeevatkm/digitalocean-api-java.git</developerConnection>
-        	<url>git@github.com:jeevatkm/digitalocean-api-java.git</url>
-        </scm>
+	   <connection>scm:git:git@github.com:jeevatkm/excelReader.git</connection>
+       <developerConnection>scm:git:git@github.com:jeevatkm/excelReader.git</developerConnection>
+       <url>git@github.com:jeevatkm/excelReader.git</url>
+	</scm>
 	<developers>
         <developer>
                 <id>jeevatkm</id>
@@ -113,11 +113,5 @@
 				</plugin>
 			</plugins>
          </pluginManagement>
-      </build>	
-
-  <scm>
-    <connection>scm:svn:http://svn.sonatype.org/spice/tags/excelReader-1.2</connection>
-    <developerConnection>scm:svn:https://svn.sonatype.org/spice/tags/excelReader-1.2</developerConnection>
-    <url>http://svn.sonatype.org/spice/tags/excelReader-1.2</url>
-  </scm>
+      </build>
 </project>
