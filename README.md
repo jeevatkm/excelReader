@@ -1,4 +1,4 @@
-excelReader
+excelReader [![Build Status](https://travis-ci.org/jeevatkm/excelReader.svg?branch=master)](https://travis-ci.org/jeevatkm/excelReader)
 ===========
 
 Generic Excel File (XLSX) Reader
