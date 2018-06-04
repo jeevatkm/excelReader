@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (c) 2012 www.myjeeva.com
+ * Copyright (c) Jeevanandam M. (jeeva@myjeeva.com)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -29,7 +29,6 @@ package com.myjeeva.poi;
  * @since v1.0
  */
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -40,6 +39,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.openxml4j.opc.PackageAccess;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.eventusermodel.ReadOnlySharedStringsTable;
 import org.apache.poi.xssf.eventusermodel.XSSFReader;
@@ -53,7 +53,7 @@ import org.xml.sax.XMLReader;
 
 public class ExcelReader {
 
-  private static final Log LOG = LogFactory.getLog(ExcelReader.class);
+  private static final Log log = LogFactory.getLog(ExcelReader.class);
 
   private static final int READ_ALL = -1;
 
@@ -170,14 +170,8 @@ public class ExcelReader {
         if (null != sheetCallback)
           this.sheetCallback.endSheet();
       }
-    } catch (IOException ioe) {
-      LOG.error(ioe.getMessage(), ioe.getCause());
-    } catch (SAXException se) {
-      LOG.error(se.getMessage(), se.getCause());
-    } catch (OpenXML4JException oxe) {
-      LOG.error(oxe.getMessage(), oxe.getCause());
-    } catch (ParserConfigurationException pce) {
-      LOG.error(pce.getMessage(), pce.getCause());
+    } catch (IOException | SAXException | OpenXML4JException | ParserConfigurationException e) {
+      log.error(e.getMessage(), e.getCause());
     }
   }
 
@@ -217,6 +211,6 @@ public class ExcelReader {
       throw new Exception("File object is null or cannot have read permission");
     }
 
-    return OPCPackage.open(new FileInputStream(file));
+    return OPCPackage.open(file, PackageAccess.READ);
   }
 }

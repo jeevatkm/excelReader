@@ -1,7 +1,8 @@
 /**
  * The MIT License
  *
- * Copyright (c) myjeeva.com Copyright 2013 https://github.com/DouglasCAyers
+ * Copyright (c) Jeevanandam M. (jeeva@myjeeva.com) 
+ * Copyright 2013 https://github.com/DouglasCAyers
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,

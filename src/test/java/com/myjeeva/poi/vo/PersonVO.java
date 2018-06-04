@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (c) 2012 www.myjeeva.com
+ * Copyright (c) Jeevanandam M. (jeeva@myjeeva.com)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -26,7 +26,7 @@ import java.io.Serializable;
 /**
  * Sample ValueObject for Reading a Value from Excel File (XLSX)
  * 
- * @author <a href="mailto:jeeva@myjeeva.com">Jeevanandam Madanagopal</a>
+ * @author <a href="mailto:jeeva@myjeeva.com">Jeevanandam M.</a>
  */
 public class PersonVO implements Serializable {
   private static final long serialVersionUID = 2236211849311396533L;

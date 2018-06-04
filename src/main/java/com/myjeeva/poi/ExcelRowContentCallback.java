@@ -1,7 +1,8 @@
 /**
  * The MIT License
  *
- * Copyright (c) myjeeva.com Copyright 2013 https://github.com/DouglasCAyers
+ * Copyright (c) Jeevanandam M. (jeeva@myjeeva.com) 
+ * Copyright 2013 https://github.com/DouglasCAyers
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -26,6 +27,8 @@ import java.util.Map;
 /**
  * Callback for processing a single row from excel file. Map keys are same as first row header
  * columns.
+ * 
+ * @author <a href="mailto:jeeva@myjeeva.com">Jeevanandam M.</a>
  * 
  * @since v1.1
  */
