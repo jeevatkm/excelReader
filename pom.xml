@@ -18,7 +18,7 @@
 	<artifactId>excelReader</artifactId>
 	<packaging>jar</packaging>
 	<name>Generic Excel File (XLSX) Reader</name>
-	<version>1.3</version>
+	<version>1.4-SNAPSHOT</version>
 	<description>Project of Generic Excel File Reader with Sample</description>
 	<url>https://myjeeva.com</url>
 	<licenses>
